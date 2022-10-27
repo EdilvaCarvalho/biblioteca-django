@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>Meus Livros - Biblioteca</title>
+{% endblock %}
+{% block conteudo %}
+    {% include 'partils/_alertas.html' %}
+    <div>
+        <div>
+            <h2>Livros de {{ user.first_name }}
+            <a href="{% url 'criar_livro' %}" class="btn btn-primary float-end"><i class="bi bi-plus-lg"></i> Adicionar Livro</a>
+            </h2>
+            <hr>
+        </div>
+    </div>
+    <form action="?" method="GET">
+        <input type="text" name="nome" id="" value="{{ request.GET.nome }}" class="p-1 border" autocomplete="off" placeholder="Nome ou parte dele">
+        <button type="submit" class="btn btn-success">Buscar</button>
+        <a href="{% url 'listar_livros_usuario' %}" class="btn btn-light">Limpar</a>
+    </form>
+    <br>
+    <div class="row">
+        {% for livro in object_list %}
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                <a href="{% url 'detalhar_livro' livro.id %}">
+                {% if livro.capa == '' %}
+                    <img src="{% static 'img/livro.png' %}" class="card-img-top" alt="...">
+                {% else %}
+                    <img src="{{ livro.capa.url }}" class="card-img-top" alt="...">
+                {% endif %}
+                </a>
+                <div class="card-body">
+                    <a href="{% url 'detalhar_livro' livro.id %}" class="text-decoration-none text-reset"><h5 class="card-title">{{ livro.titulo }}</h5></a>
+                    <p>Autor(es): </p>
+                    {% for autor in livro.autor.all %}
+                        <p class="card-text"> {{ autor.nome }}</p>
+                    {% endfor %}
+                    <a href="{% url 'editar_livro' livro.id %}" class="btn btn-primary">Editar</a>
+                    <a href="{% url 'deletar_livro' livro.id %}" class="btn btn-danger">Deletar</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Nenhum livro registrado.</p>
+        {% endfor %}
+    </div>
+    <div>
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Anterior</a>
+                {% endif %}
+            </li>
+
+            <li class="page-item">
+                <p class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</p>
+            </li>
+
+            <li class="page-item">
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-link">Próxima</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+{% endblock %}

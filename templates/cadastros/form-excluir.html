@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>{{ titulo }}</title>
+{% endblock %}
+{% block conteudo %}
+    <div class="row">
+        <div class="col-12">
+            <div align="center">
+                <h2>Excluir registro</h2>
+            </div>
+        </div>
+    </div>
+    <p class="lead">Confirme para excluir o registro definitivamente.</p>
+    <hr>
+    <form action="." method="post">
+        <p>Deseja excluir o registro: <b>{{ object }}</b>?</p>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-danger" value="Excluir">
+    </form>
+{% endblock %}

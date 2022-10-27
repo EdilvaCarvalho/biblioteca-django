@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>Usuário - Biblioteca</title>
+{% endblock %}
+{% block conteudo %}
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <h2>{{ object.first_name }} {{ object.last_name }}
+                <a href="{% url 'editar_usuario' %}" class="btn btn-warning float-end"><i class="bi bi-pencil-square"></i> Editar</a>
+                </h2>
+                <hr>
+            </div>
+        </div>
+        {% include 'partils/_alertas.html' %}
+        <div class="table-responsive">
+            <p class="h5">Username: {{ object.username }}</p>
+            <p class="h5">E-mail: {{ object.email }}</p>
+        </div>
+    </div>
+{% endblock %}

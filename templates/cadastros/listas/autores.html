@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>Autores - Biblioteca</title>
+{% endblock %}
+{% block conteudo %}
+    {% include 'partils/_alertas.html' %}
+    <div>
+        <h2>Lista de Autores
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'criar_autor' %}" class="btn btn-primary float-end"><i class="bi bi-plus-lg"></i> Adicionar Autor</a>
+        {% endif %}
+        </h2>
+        <hr>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped" id="tabela-listar">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Data de nascimento</th>
+                    <th scope="col">Nacionalidade</th>
+                    <th scope="col">Sexo</th>
+                    <th scope="col">Livros</th>
+                    {% if request.user.is_authenticated %}
+                    <th scope="col">Ações</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for autor in object_list %}
+                <tr>
+                    <td>{{ autor.nome }}</td>
+                    <td>{{ autor.data_nasc }}</td>
+                    <td>{{ autor.nacionalidade }}</td>
+                    <td>{{ autor.get_sexo_display }}</td>
+                    <td>
+                        <a href="{% url 'listar_livros_autor' autor.pk %}" class="btn btn-primary btn-sm"><i class="bi bi-book"></i> Livros</a>
+                    </td>
+                    {% if request.user.is_authenticated %}
+                    <td>
+                        <a href="{% url 'editar_autor' autor.pk %}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
+                        <a href="{% url 'deletar_autor' autor.pk %}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">Nenhum(a) autor(a) registrado(a).</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/paginacao.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>Livro - {{ livro.titulo }}</title>
+{% endblock %}
+{% block conteudo %}
+    <div class="page-header text-center py-3">
+        <h1>{{ livro.titulo }}</h1>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            {% if livro.capa_livro == '' %}
+                    <img src="{% static 'img/livro.png' %}" class="card-img-top" alt="...">
+                {% else %}
+                    <img src="{{ livro.capa.url }}" class="card-img-top" alt="...">
+                {% endif %}
+        </div>
+        <div class="col-sm-8">
+            <p class="h4"><strong>Gênero: </strong>{{ livro.genero }}</p>
+            <p class="h4"><strong>Autor(es): </strong></p>
+            {% for autor in livro.autor.all %}
+                <p class="h4">{{ autor.nome }}</p>
+            {% endfor %}
+            <p class="h4"><strong>Ano de Publicação: </strong>{{ livro.ano_pub }}</p>
+            <p class="h4"><strong>Quantidade de páginas: </strong>{{ livro.qtd_paginas }}</p>
+            <p class="h4"><strong>Editora: </strong>{{ livro.editora.nome }}</p>
+            <p class="h4"><strong>Resenha: </strong></p>
+            <p class="h5">{{ livro.resenha }}</p>
+            <p class="h4"><strong>Onde comprar:</strong> <a href="{{ livro.onde_comprar }}">Abrir</a></p>
+            <p class="h4"><strong>Livro em PDF:</strong> <a href="{{ livro.livro_pdf.url }}">Abrir</a></p>
+        </div>
+    </div>
+{% endblock %}

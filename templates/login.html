@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head %}
+    <title>Login - Biblioteca</title>
+{% endblock %}
+{% block conteudo %}
+    <div class="row">
+        {% include 'partils/_alertas.html' %}
+        <div class="col-5 mx-auto">
+            <div align="center">
+                <h2>Login</h2>
+            </div>
+            <hr>
+            <form action="." method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" class="btn btn-primary mt-3" value="Entrar">
+            </form>
+        </div>
+    </div>
+{% endblock %}

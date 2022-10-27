@@ -1,0 +1,17 @@
+footer{
+    clear: both;
+    width: 100%;
+    bottom:0;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-top: auto 0;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 120px; /* altura do seu footer */
+}
